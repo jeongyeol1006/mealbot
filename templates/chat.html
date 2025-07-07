@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>급식 챗봇</title>
+</head>
+<body>
+    <h1>장곡고 급식 챗봇 🤖</h1>
+    <input type="text" id="message" placeholder="메시지를 입력하세요">
+    <button onclick="send()">보내기</button>
+    <pre id="response"></pre>
+
+    <script>
+        function send() {
+            const msg = document.getElementById('message').value;
+            fetch('/chat', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({message: msg})
+            }).then(res => res.json())
+              .then(data => {
+                document.getElementById('response').innerText = data.reply;
+              });
+        }
+    </script>
+</body>
+</html>

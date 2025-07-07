@@ -1,0 +1,77 @@
+from flask import Flask, render_template, request, jsonify
+import requests
+from bs4 import BeautifulSoup
+import re
+from datetime import datetime, timedelta
+import urllib3
+
+app = Flask(__name__)
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+def get_day_offset(offset):
+    return (datetime.today() + timedelta(days=offset)).day
+
+def get_school_meal(url, day=None):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'
+    }
+
+    try:
+        response = requests.get(url, headers=headers, verify=False)
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        title = soup.find('title').text.strip()
+        school_name = re.sub(r'급식 메뉴 조회 서비스', '', title)
+
+        rows = soup.find_all('tr')
+        if day is None:
+            day = datetime.today().day
+
+        result = ""
+        for row in rows:
+            cells = row.find_all('td')
+            if len(cells) > 2:
+                date_text = re.sub(r'[^0-9]', '', cells[0].text.strip())
+                if date_text and int(date_text) == int(day):
+                    meal = ''.join([
+                        f"• {item.previous_sibling.strip()}\n"
+                        for item in cells[2].find_all('br') if item.previous_sibling
+                    ])
+                    result += f"[{school_name.strip()}]\n📅 {cells[0].text.strip()} ({cells[1].text.strip()})\n🍱 급식 메뉴:\n{meal}"
+                    break
+
+        if not result:
+            result = f"🕵️‍♂️ {day}일 급식 정보가 등록되어 있지 않거나 아직 업데이트되지 않았어요.\n학교 홈페이지를 확인해보세요."
+
+        return result
+
+    except Exception as e:
+        return f"🚨 오류 발생: {str(e)}"
+
+
+@app.route('/')
+def index():
+    return render_template('chat.html')  # chat.html 템플릿 필요
+
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    user_msg = request.json.get('message')
+    school_url = "https://school.koreacharts.com/school/meals/B000012565/contents.html"
+
+    user_msg = user_msg.strip().lower()
+
+    if "오늘" in user_msg:
+        reply = get_school_meal(school_url, day=get_day_offset(0))
+    elif "내일 모레" in user_msg:
+        reply = get_school_meal(school_url, day=get_day_offset(2))
+    elif "내일" in user_msg:
+        reply = get_school_meal(school_url, day=get_day_offset(1))
+    else:
+        reply = "🤖 '오늘 급식 알려줘', '내일 급식 알려줘'처럼 말씀해보세요!"
+
+    return jsonify({'reply': reply})
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
