@@ -5,11 +5,21 @@ import re
 from datetime import datetime, timedelta
 import urllib3
 
-app = Flask(__name__)
+app = Flask(name)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def get_day_offset(offset):
     return (datetime.today() + timedelta(days=offset)).day
+
+def yo_il(o_nul):
+    return (datetime.today() + timedelta(days=o_nul)).weekday()
+
+def yoil_count(target_weekday):
+    today_weekday = datetime.today().weekday()
+    days_until = (target_weekday - today_weekday + 7) % 7
+    if days_until == 0:
+        days_until = 7
+    return days_until
 
 def get_school_meal(url, day=None):
     headers = {
@@ -48,7 +58,6 @@ def get_school_meal(url, day=None):
     except Exception as e:
         return f"🚨 오류 발생: {str(e)}"
 
-
 @app.route('/')
 def index():
     return render_template('chat.html')  # chat.html 템플릿 필요
@@ -67,11 +76,30 @@ def chat():
         reply = get_school_meal(school_url, day=get_day_offset(2))
     elif "내일" in user_msg:
         reply = get_school_meal(school_url, day=get_day_offset(1))
+    elif "월요일" in user_msg:
+        ty = 0
+        reply = get_school_meal(school_url, day=get_day_offset(yoil_count(ty)))
+    elif "화요일" in user_msg:
+        ty = 1
+        reply = get_school_meal(school_url, day=get_day_offset(yoil_count(ty)))
+    elif "수요일" in user_msg:
+        ty = 2
+        reply = get_school_meal(school_url, day=get_day_offset(yoil_count(ty)))
+    elif "목요일" in user_msg:
+        ty = 3
+        reply = get_school_meal(school_url, day=get_day_offset(yoil_count(ty)))
+    elif "금요일" in user_msg:
+        ty = 4
+        reply = get_school_meal(school_url, day=get_day_offset(yoil_count(ty)))
+    elif "토요일" in user_msg:
+        reply = "토요일엔 학교를 안 갑니다"
+    elif "일요일" in user_msg:
+        reply = "일요일엔 학교를 안 갑니다"
     else:
         reply = "🤖 '오늘 급식 알려줘', '내일 급식 알려줘'처럼 말씀해보세요!"
 
     return jsonify({'reply': reply})
 
 
-if __name__ == '__main__':
+if name == 'main':
     app.run(host='0.0.0.0', port=5000, debug=True)
