@@ -5,7 +5,7 @@ import re
 from datetime import datetime, timedelta
 import urllib3
 
-app = Flask(name)
+app = Flask(__name__)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def get_day_offset(offset):
