@@ -101,5 +101,5 @@ def chat():
     return jsonify({'reply': reply})
 
 
-if __name__ == 'main':
+if __name__ == '__main'__:
     app.run(host='0.0.0.0', port=5000, debug=True)
