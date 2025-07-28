@@ -41,6 +41,7 @@
         // 메시지 보내기
         function send() {
             const msg = document.getElementById('message').value;
+            document.getElementById('response').innerText ="⏳ 급식 가져오는 중입니다..."; 
             fetch('/chat', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -66,6 +67,7 @@
             const btn = document.createElement("button");
             btn.innerText = label;
             btn.onclick = () => {
+                document.getElementById('response').innerText = "⏳ 급식 가져오는 중입니다...";
                 fetch('/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
