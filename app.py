@@ -65,10 +65,17 @@ def index():
 
 @app.route('/chat', methods=['POST'])
 def chat():
-    user_msg = request.json.get('message')
+    user_msg = request.json.get('message').strip().lower()
     school_url = "https://school.koreacharts.com/school/meals/B000012565/contents.html"
 
-    user_msg = user_msg.strip().lower()
+    match = re.search(r'(\d{1,2})[./](\d{1,2})', user_msg)
+    if match:
+        month, day = int(match.group(1)), int(match.group(2))
+        try:
+            date = datetime(datetime.today().year, month, day)
+            return jsonify({'reply': get_school_meal(school_url, day=day)})
+        except:
+            return jsonify({'reply': "❗ 올바른 날짜 형식이 아니에요."})
 
     if "오늘" in user_msg:
         reply = get_school_meal(school_url, day=get_day_offset(0))
