@@ -2,6 +2,32 @@
 <html>
 <head>
     <title>급식 챗봇</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        h1 {
+            color: #0077cc;
+        }
+        input {
+            font-size: 16px;
+            padding: 8px;
+        }
+        button {
+            margin: 5px;
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+        #response {
+            font-family: 'Courier New', monospace;
+            color: #222;
+            background-color: #e6f0ff;
+            padding: 10px;
+            white-space: pre-line;
+        }
+    </style>
 </head>
 <body>
     <h1>장곡고 급식 챗봇 🤖</h1>
@@ -9,64 +35,48 @@
     <button onclick="send()">보내기</button>
     <pre id="response"></pre>
 
+    <div id="calendar"></div>
+
     <script>
+        // 메시지 보내기
         function send() {
             const msg = document.getElementById('message').value;
             fetch('/chat', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({message: msg})
+                body: JSON.stringify({ message: msg })
             }).then(res => res.json())
               .then(data => {
                 document.getElementById('response').innerText = data.reply;
               });
         }
+
+        // Enter 키로 전송
+        document.getElementById("message").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") send();
+        });
+
+        // 날짜 버튼 생성
+        const calendarDiv = document.getElementById("calendar");
+        const today = new Date();
+        for (let i = 0; i < 7; i++) {
+            const date = new Date();
+            date.setDate(today.getDate() + i);
+            const label = `${date.getMonth() + 1}/${date.getDate()}`;
+            const btn = document.createElement("button");
+            btn.innerText = label;
+            btn.onclick = () => {
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: label })
+                }).then(res => res.json())
+                  .then(data => {
+                    document.getElementById('response').innerText = data.reply;
+                  });
+            };
+            calendarDiv.appendChild(btn);
+        }
     </script>
 </body>
-<style>
-    body{
-        font-family: 'Arial', sans-serif;
-        background-color : #f8f8f8;
-        color: #333;
-    }
-    h1{
-        color: #0077cc;
-    }
-    input {
-        font-size:16px;
-        padding:8px;
-    }
-    #response{
-        font-family: 'Courier New', monospace;
-        color: #222;
-        background-color : #e6f0ff;
-        padding:10px;
-        white-space:pre-line;
-    }
-</style>
-<script>
-    document.getElementById("message").addEventListener("keypress", function (e) {
-        if (e.key === "Enter") {
-            send();
-        }
-    });
-
-    function send() {
-        const msg = document.getElementById('message').value;
-        fetch('/chat', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({message: msg})
-        }).then(res => res.json())
-          .then(data => {
-            document.getElementById('response').innerText = data.reply;
-          });
-    }
-</script>
-<div id="dates">
-    <button onclick="getMealByDate('7/1')">7월 1일</button>
-    <button onclick="getMealByDate('7/2')">7월 2일</button>
-    <button onclick="getMealByDate('7/3')">7월 3일</button>
-    
-</div>
 </html>
