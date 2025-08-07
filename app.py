@@ -47,7 +47,7 @@ def get_school_meal(url, day=None):
                         f"• {item.previous_sibling.strip()}\n"
                         for item in cells[2].find_all('br') if item.previous_sibling
                     ])
-                    result += f"[{school_name.strip()}]\n📅 {cells[0].text.strip()} ({cells[1].text.strip()})\n🍱 급식 메뉴:\n\n {meal}"
+                    result += f"[{school_name.strip()}]\n📅 {cells[0].text.strip()} ({cells[1].text.strip()})\n🍱 급식 메뉴:\n {meal}"
                     break
 
         if not result:
