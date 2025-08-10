@@ -74,31 +74,37 @@ def chat():
             return jsonify({'reply': get_school_meal(school_url, day=day)})
         except:
             return jsonify({'reply': "❗ 올바른 날짜 형식이 아니에요."})
-
-    if "오늘" in user_msg:
+    
+    if "오늘" in user_msg or "급식" in user_msg or "금일" in user_msg :
         reply = get_school_meal(school_url, day=get_day_offset(0))
-    elif "내일 모레" in user_msg:
-        reply = get_school_meal(school_url, day=get_day_offset(2))
-    elif "내일" in user_msg:
+    elif "엊그제" in user_msg "작일" in user_msg:
+        reply = get_school_meal(school_url, day=get_day_offset(-2))
+    elif "어제" in user_msg "작일" in user_msg:
+        reply = get_school_meal(school_url, day=get_day_offset(-1))
+    elif "내일" in user_msg or "명일" in user_msg:
         reply = get_school_meal(school_url, day=get_day_offset(1))
-    elif "월요일" in user_msg:
+    elif "모레" in user_msg:
+        reply = get_school_meal(school_url, day=get_day_offset(2))
+    elif "글피" in user_msg:
+        reply = get_school_meal(school_url, day=get_day_offset(3))
+    elif "월" in user_msg:
         ty = 0
         reply = get_school_meal(school_url, day=get_day_offset(yoil_count(ty)))
-    elif "화요일" in user_msg:
+    elif "화" in user_msg:
         ty = 1
         reply = get_school_meal(school_url, day=get_day_offset(yoil_count(ty)))
-    elif "수요일" in user_msg:
+    elif "수" in user_msg:
         ty = 2
         reply = get_school_meal(school_url, day=get_day_offset(yoil_count(ty)))
-    elif "목요일" in user_msg:
+    elif "목" in user_msg:
         ty = 3
         reply = get_school_meal(school_url, day=get_day_offset(yoil_count(ty)))
-    elif "금요일" in user_msg:
+    elif "금" in user_msg:
         ty = 4
         reply = get_school_meal(school_url, day=get_day_offset(yoil_count(ty)))
-    elif "토요일" in user_msg:
+    elif "토" in user_msg:
         reply = "토요일엔 학교를 안 갑니다"
-    elif "일요일" in user_msg:
+    elif "일" in user_msg:
         reply = "일요일엔 학교를 안 갑니다"
     else:
         reply = "🤖 '오늘 급식 알려줘', '내일 급식 알려줘'처럼 말씀해보세요!"
