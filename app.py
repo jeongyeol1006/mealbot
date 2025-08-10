@@ -75,16 +75,16 @@ def chat():
         except:
             return jsonify({'reply': "❗ 올바른 날짜 형식이 아니에요."})
     
-    if "오늘" in user_msg or "급식" in user_msg or "금일" in user_msg :
+    if "오늘" in user_msg or "금일" in user_msg :
         reply = get_school_meal(school_url, day=get_day_offset(0))
     elif "엊그제" in user_msg:
         reply = get_school_meal(school_url, day=get_day_offset(-2))
     elif "어제" in user_msg or "작일" in user_msg:
         reply = get_school_meal(school_url, day=get_day_offset(-1))
+    elif "내일 모레" in user_msg or "모레" in user_msg:
+        reply = get_school_meal(school_url, day=get_day_offset(2))
     elif "내일" in user_msg or "명일" in user_msg:
         reply = get_school_meal(school_url, day=get_day_offset(1))
-    elif "모레" in user_msg or "내일 모레" in user_msg:
-        reply = get_school_meal(school_url, day=get_day_offset(2))
     elif "글피" in user_msg:
         reply = get_school_meal(school_url, day=get_day_offset(3))
     elif "월" in user_msg:
