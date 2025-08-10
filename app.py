@@ -83,7 +83,7 @@ def chat():
         reply = get_school_meal(school_url, day=get_day_offset(-1))
     elif "내일" in user_msg or "명일" in user_msg:
         reply = get_school_meal(school_url, day=get_day_offset(1))
-    elif "모레" in user_msg:
+    elif "모레" in user_msg or "내일 모레" in user_msg:
         reply = get_school_meal(school_url, day=get_day_offset(2))
     elif "글피" in user_msg:
         reply = get_school_meal(school_url, day=get_day_offset(3))
