@@ -43,6 +43,7 @@ def get_school_meal(url, day=None):
             if len(cells) > 2:
                 date_text = re.sub(r'[^0-9]', '', cells[0].text.strip())
                 if date_text and int(date_text) == int(day):
+                    meal_items = cells[2].get_text(separator="\n").strip().split("\n")
                     meal = ''.join([
                         f"• {item.previous_sibling.strip()}\n"
                         for item in cells[2].find_all('br') if item.previous_sibling
