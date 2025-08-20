@@ -77,6 +77,10 @@ def chat():
     
     if "오늘" in user_msg or "금일" in user_msg or "배고파" in user_msg :
         reply = get_school_meal(school_url, day=get_day_offset(0))
+    elif "씨발" in user_msg or "시발" in user_msg or "ㅅㅂ" in user_msg or "씨빨" in user_msg or "시빨" in user_msg:
+        reply = "챗봇이라고 막던지네 씹새끼가"
+    elif "애미" in user_msg or "엄마" in user_msg:
+        reply = "어디서 패드립이야 니애미 묘지나 찾아가라 부관참시 해버리기전에 ㅋ"
     elif "엊그제" in user_msg:
         reply = get_school_meal(school_url, day=get_day_offset(-2))
     elif "어제" in user_msg or "작일" in user_msg:
@@ -115,11 +119,12 @@ def chat():
     elif "정연우" in user_msg or "연우" in user_msg:
         reply = "30924"
     elif "최혁" in user_msg or "혁" in user_msg:
-        reply = "나는 한태주가 싫다"
+        reply = "나는 한태주다"
     elif "김주호" in user_msg or "주호" in user_msg:
-        reply = "<Horse's Law> 김주호=말"
+        reply = "<Horse's Law> 말==김주호"
     elif "조성범" in user_msg or "성범" in user_msg:
-        reply = "쉘리 그만해"
+        reply = "쉘리 계속해"
+
     else:
         reply = "🤖 '오늘 급식 알려줘', '내일 급식 알려줘'처럼 말씀해보세요!"
 
