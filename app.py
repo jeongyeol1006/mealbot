@@ -113,7 +113,7 @@ def chat():
     elif "최정열" in user_msg or "정열" in user_msg:
         reply = "30827"
     elif "유지헌" in user_msg or "지헌" in user_msg:
-        rerply = "30619"
+        reply ="30619"
     elif "심범근" in user_msg or "범근" in user_msg:
         reply = "30815"
     elif "정연우" in user_msg or "연우" in user_msg:
