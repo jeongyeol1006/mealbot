@@ -124,7 +124,10 @@ def chat():
         reply = "<Horse's Law> 말==김주호"
     elif "조성범" in user_msg or "성범" in user_msg:
         reply = "쉘리 계속해"
-
+    elif "백일만백일" in user_msg or "1010101" in user_msg:
+        reply = "노무 산악해"
+    elif "이산" in user_msg or "확률변수" in user_msg:
+        reply = "노무 사악해"
     else:
         reply = "🤖 '오늘 급식 알려줘', '내일 급식 알려줘'처럼 말씀해보세요!"
 
