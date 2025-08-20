@@ -76,9 +76,9 @@ def chat():
     if "오늘" in user_msg or "금일" in user_msg or "배고파" in user_msg :
         reply = get_school_meal(school_url, day=get_day_offset(0))
     elif "씨발" in user_msg or "시발" in user_msg or "ㅅㅂ" in user_msg or "씨빨" in user_msg or "시빨" in user_msg:
-        reply = "챗봇이라고 막던지네 씹새끼가"
+        reply = "욕하지마세요"
     elif "애미" in user_msg or "엄마" in user_msg:
-        reply = "어디서 패드립이야 니애미 묘지나 찾아가라 부관참시 해버리기전에 ㅋ"
+        reply = "집에 계십니다!"
     elif "엊그제" in user_msg:
         reply = get_school_meal(school_url, day=get_day_offset(-2))
     elif "어제" in user_msg or "작일" in user_msg:
