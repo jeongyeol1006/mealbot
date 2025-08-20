@@ -116,6 +116,10 @@ def chat():
         reply = "30924"
     elif "최혁" in user_msg or "혁" in user_msg:
         reply = "나는 한태주가 싫다"
+    elif "김주호" in user_ msg or "주호" in user_msg:
+        reply = "<Horse's Law> 김주호=말"
+    elif "조성범" in user_msg or "성범" in user_msg:
+        reply = "쉘리 그만해"
     else:
         reply = "🤖 '오늘 급식 알려줘', '내일 급식 알려줘'처럼 말씀해보세요!"
 
