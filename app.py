@@ -17,8 +17,6 @@ def yo_il(o_nul):
 def yoil_count(target_weekday):
     today_weekday = datetime.today().weekday()
     days_until = (target_weekday - today_weekday + 7) % 7
-    if days_until == 0:
-        days_until = 7
     return days_until
 
 def get_school_meal(url, day=None):
