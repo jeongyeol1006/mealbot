@@ -89,6 +89,10 @@ def chat():
         reply = get_school_meal(school_url, day=get_day_offset(1))
     elif "글피" in user_msg:
         reply = get_school_meal(school_url, day=get_day_offset(3))
+    elif "백일만백일" in user_msg or "1010101" in user_msg:
+        reply = "노무 산악해"
+    elif "이산" in user_msg or "확률변수" in user_msg:
+        reply = "노무 사악해"
     elif "월" in user_msg:
         ty = 0
         reply = get_school_meal(school_url, day=get_day_offset(yoil_count(ty)))
@@ -104,6 +108,7 @@ def chat():
     elif "금" in user_msg:
         ty = 4
         reply = get_school_meal(school_url, day=get_day_offset(yoil_count(ty)))
+    
     elif "토" in user_msg:
         reply = "토요일엔 학교를 안 갑니다"
     elif "일" in user_msg:
@@ -122,12 +127,12 @@ def chat():
         reply = "<Horse's Law> 말==김주호"
     elif "조성범" in user_msg or "성범" in user_msg:
         reply = "쉘리 계속해"
-    elif "백일만백일" in user_msg or "1010101" in user_msg:
-        reply = "노무 산악해"
-    elif "이산" in user_msg or "확률변수" in user_msg:
-        reply = "노무 사악해"
     elif "박다윤" in user_msg or "다윤" in user_msg:
         reply = "롯데 10연패" 
+    elif "임현창" in user_msg or "현창" in user_msg:
+        reply = "일론머스크"
+    elif "유지호" in user_msg or "지호" in user_msg:
+        reply = "존나 구피 닮았네 ㅋㅋ"
     else:
         reply = "🤖 '오늘 급식 알려줘', '내일 급식 알려줘'처럼 말씀해보세요!"
 
